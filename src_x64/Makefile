@@ -38,7 +38,7 @@ rootfs.tar.gz: rootfs
 rootfs: base.tar.gz profile
 	@echo -e '\e[1;31mBuilding rootfs...\e[m'
 	mkdir rootfs
-	sudo tar -zxpf base.tar.gz -C rootfs
+	sudo tar -xpf base.tar.gz -C rootfs
 	sudo cp -f /etc/resolv.conf rootfs/etc/resolv.conf
 	sudo cp -f profile rootfs/etc/profile
 	sudo chroot rootfs /sbin/apk update
