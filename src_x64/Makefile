@@ -32,13 +32,13 @@ icons.zip:
 
 rootfs.tar.gz: rootfs
 	@echo -e '\e[1;31mBuilding rootfs.tar.gz...\e[m'
-	cd rootfs; sudo tar -zcpf ../rootfs.tar.gz `sudo ls`
+	cd rootfs; sudo tar -cpf ../rootfs.tar.gz `sudo ls`
 	sudo chown `id -un` rootfs.tar.gz
 
 rootfs: base.tar.gz profile
 	@echo -e '\e[1;31mBuilding rootfs...\e[m'
 	mkdir rootfs
-	sudo tar -xpf base.tar.gz -C rootfs
+	sudo tar -zxpf base.tar.gz -C rootfs
 	sudo cp -f /etc/resolv.conf rootfs/etc/resolv.conf
 	sudo cp -f profile rootfs/etc/profile
 	sudo chroot rootfs /sbin/apk update
