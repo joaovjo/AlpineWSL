@@ -2,8 +2,11 @@ name: Release Zip CI
 
 on:
   push:
+    branches: [ 'main' ]
+  pull_request: 
+    branches: [ 'main' ]
     tags:
-      - "3.20.3-0"
+      - "*.*.*"
 
 jobs:
   Build:
