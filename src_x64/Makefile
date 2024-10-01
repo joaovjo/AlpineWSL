@@ -4,7 +4,8 @@ LNCR_EXE=Alpine.exe
 DLR=curl
 DLR_FLAGS=-L
 BASE_URL=https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases/x86_64/
-LNCR_REPO=https://github.com/yuk7/wsldl/releases
+LNCR_ZIP_URL="https://github.com/yuk7/wsldl/releases/download/23051400/icons.zip"
+LNCR_ZIP_EXE=Alpine.exe
 
 all: $(OUT_ZIP)
 
@@ -27,7 +28,7 @@ Launcher.exe: icons.zip
 
 icons.zip:
 	@echo -e '\e[1;31mDownloading icons.zip...\e[m'
-	$(DLR) $(DLR_FLAGS) "$(curl -s $(LNCR_REPO) | grep -o 'href="/yuk7/wsldl/releases/download/[^"]*/icons.zip"' | head -n 1 | sed 's|href="/|https://github.com/|;s|"||')" -o icons.zip
+	$(DLR) $(DLR_FLAGS) $(LNCR_ZIP_URL) -o icons.zip
 
 rootfs.tar.gz: rootfs
 	@echo -e '\e[1;31mBuilding rootfs.tar.gz...\e[m'
