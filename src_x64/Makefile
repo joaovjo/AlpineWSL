@@ -49,7 +49,7 @@ rootfs: base.tar.gz profile
 
 base.tar.gz:
 	@echo -e '\e[1;31mDownloading base.tar.gz...\e[m'
-	$(DLR) $(DLR_FLAGS) $(BASE_URL) | grep -o 'alpine-minirootfs-[0-9.]\+-x86_64\.tar\.gz' | sort -V | tail -n 1 -o base.tar.gz
+	$(DLR) $(DLR_FLAGS) $(BASE_URL) | grep -o 'alpine-minirootfs-[0-9.]\+-x86_64\.tar\.gz' | sort -V | tail -n 1 > base.tar.gz
 
 clean:
 	@echo -e '\e[1;31mCleaning files...\e[m'
