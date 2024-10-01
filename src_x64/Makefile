@@ -26,8 +26,8 @@ Launcher.exe: icons.zip
 	mv $(LNCR_EXE) Launcher.exe
 
 icons.zip:
-	@echo -e '\e[1;31mDownloading icons.zip...\e[m'
-	$(DLR) $(DLR_FLAGS) "$$(curl -s $(LNCR_REPO) | grep -o 'href=\"/yuk7/wsldl/releases/download/[^\"]*/icons.zip\"' | head -n 1 | sed 's/href=\"/https:\/\/github.com/' | sed 's/\"//')" -o icons.zip
+    @echo -e '\e[1;31mDownloading icons.zip...\e[m'
+    $(DLR) $(DLR_FLAGS) "$$(curl -s $(LNCR_REPO) | grep -o 'href=\"/yuk7/wsldl/releases/download/[^\"]*/icons.zip\"' | head -n 1 | sed 's|href=\"|https://github.com/|;s|\"||')" -o icons.zip
 
 rootfs.tar.gz: rootfs
 	@echo -e '\e[1;31mBuilding rootfs.tar.gz...\e[m'
