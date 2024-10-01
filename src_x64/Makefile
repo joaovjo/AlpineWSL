@@ -3,8 +3,8 @@ LNCR_EXE=Alpine.exe
 
 DLR=curl
 DLR_FLAGS=-L
-BASE_URL=https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases/x86_64/
-LNCR_ZIP_URL="https://github.com/yuk7/wsldl/releases/download/23051400/icons.zip"
+BASE_URL=https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases/x86_64/alpine-minirootfs-3.20.3-x86_64.tar.gz
+LNCR_ZIP_URL=https://github.com/yuk7/wsldl/releases/download/23051400/icons.zip
 LNCR_ZIP_EXE=Alpine.exe
 
 all: $(OUT_ZIP)
@@ -23,8 +23,8 @@ ziproot: Launcher.exe rootfs.tar.gz
 exe: Launcher.exe
 Launcher.exe: icons.zip
 	@echo -e '\e[1;31mExtracting Launcher.exe...\e[m'
-	bsdtar -xvf icons.zip $(LNCR_EXE)
-	mv $(LNCR_EXE) Launcher.exe
+	bsdtar -xvf icons.zip $(LNCR_ZIP_EXE)
+	mv $(LNCR_ZIP_EXE) Launcher.exe
 
 icons.zip:
 	@echo -e '\e[1;31mDownloading icons.zip...\e[m'
@@ -38,7 +38,6 @@ rootfs.tar.gz: rootfs
 rootfs: base.tar.gz profile
 	@echo -e '\e[1;31mBuilding rootfs...\e[m'
 	mkdir rootfs
-	file base.tar.gz
 	sudo tar -zxpf base.tar.gz -C rootfs
 	sudo cp -f /etc/resolv.conf rootfs/etc/resolv.conf
 	sudo cp -f profile rootfs/etc/profile
@@ -50,7 +49,7 @@ rootfs: base.tar.gz profile
 
 base.tar.gz:
 	@echo -e '\e[1;31mDownloading base.tar.gz...\e[m'
-	$(DLR) $(DLR_FLAGS) $(BASE_URL) | grep -o 'alpine-minirootfs-[0-9.]\+-x86_64\.tar\.gz' | sort -V | tail -n 1 > base.tar.gz
+	$(DLR) $(DLR_FLAGS) $(BASE_URL) -o base.tar.gz
 
 clean:
 	@echo -e '\e[1;31mCleaning files...\e[m'
