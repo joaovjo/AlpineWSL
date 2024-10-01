@@ -3,9 +3,8 @@ LNCR_EXE=Alpine.exe
 
 DLR=curl
 DLR_FLAGS=-L
-BASE_URL=https://dl-cdn.alpinelinux.org/alpine/v3.18/releases/aarch64/alpine-minirootfs-3.18.4-aarch64.tar.gz
-LNCR_ZIP_URL=https://github.com/yuk7/wsldl/releases/download/23072600/icons_arm64.zip
-LNCR_ZIP_EXE=Alpine.exe
+BASE_URL=https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases/aarch64/
+LNCR_REPO=https://github.com/yuk7/wsldl/releases
 
 all: $(OUT_ZIP)
 
@@ -23,12 +22,12 @@ ziproot: Launcher.exe rootfs.tar.gz
 exe: Launcher.exe
 Launcher.exe: icons.zip
 	@echo -e '\e[1;31mExtracting Launcher.exe...\e[m'
-	bsdtar -xvf icons.zip $(LNCR_ZIP_EXE)
-	mv $(LNCR_ZIP_EXE) Launcher.exe
+	bsdtar -xvf icons.zip $(LNCR_EXE)
+	mv $(LNCR_EXE) Launcher.exe
 
 icons.zip:
 	@echo -e '\e[1;31mDownloading icons.zip...\e[m'
-	$(DLR) $(DLR_FLAGS) $(LNCR_ZIP_URL) -o icons.zip
+	$(DLR) $(DLR_FLAGS) "$$(curl -s $(LNCR_REPO) | grep -o 'href=\"/yuk7/wsldl/releases/download/[^\"]*/icons_arm64.zip\"' | head -n 1 | sed 's/href=\"/https:\/\/github.com/' | sed 's/\"//')" -o icons.zip
 
 rootfs.tar.gz: rootfs
 	@echo -e '\e[1;31mBuilding rootfs.tar.gz...\e[m'
@@ -47,7 +46,7 @@ rootfs: base.tar.gz profile
 
 base.tar.gz:
 	@echo -e '\e[1;31mDownloading base.tar.gz...\e[m'
-	$(DLR) $(DLR_FLAGS) $(BASE_URL) -o base.tar.gz
+	$(DLR) $(DLR_FLAGS) "$$(curl -s $(BASE_URL) | grep -o 'alpine-minirootfs-[0-9.]\+-aarch64\.tar\.gz' | sort -V | tail -n 1)" -o base.tar.gz
 
 clean:
 	@echo -e '\e[1;31mCleaning files...\e[m'
