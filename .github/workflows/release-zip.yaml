@@ -3,7 +3,7 @@ name: Release Zip CI
 on:
   push:
     tags:
-      - "*.*.*"
+      - "3.20.3-0"
 
 jobs:
   Build:
