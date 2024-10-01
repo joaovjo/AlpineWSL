@@ -15,7 +15,6 @@ jobs:
       shell: bash
       run: |
         sudo env DEBIAN_FRONTEND=noninteractive apt update -y && \
-        # sudo env DEBIAN_FRONTEND=noninteractive apt upgrade -y && \
         sudo env DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends libarchive-tools curl jq tree unzip gzip
     - name: Build Zip x64
       shell: bash
