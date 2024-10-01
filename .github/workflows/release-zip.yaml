@@ -10,7 +10,16 @@ on:
 
 jobs:
   Build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      packages: write
+      issues: write
+      pull-requests: write
+      statuses: write
+      deployments: write
+
     steps:
     - uses: actions/checkout@main
     - name: Install dependencies for build (Apt)
@@ -43,7 +52,16 @@ jobs:
 
   Release:
     needs: [Build]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      packages: write
+      issues: write
+      pull-requests: write
+      statuses: write
+      deployments: write
+
     steps:
     - name: Download Build Artifact x64
       uses: actions/download-artifact@main
